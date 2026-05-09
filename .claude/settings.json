@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*python.exe .claude/skills/translate-kb/helpers/discover.py:*)",
+      "Bash(*python.exe .claude/skills/translate-kb/helpers/cli_protect.py protect:*)",
+      "Bash(*python.exe .claude/skills/translate-kb/helpers/cli_protect.py restore:*)",
+      "Bash(rm output/*/vi/*.tmp-input.md)",
+      "Bash(rm output/*/vi/*.tmp-output.md)",
+      "Bash(rm output/*/vi/*.blocks.json)",
+      "Bash(rm output/*/vi/**/*.tmp-input.md)",
+      "Bash(rm output/*/vi/**/*.tmp-output.md)",
+      "Bash(rm output/*/vi/**/*.blocks.json)",
+      "Bash(export PYTHONIOENCODING=utf-8)"
+    ]
+  }
+}

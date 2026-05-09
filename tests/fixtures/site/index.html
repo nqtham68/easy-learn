@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html><head><title>Index</title></head>
+<body>
+<main>
+<h1>Welcome</h1>
+<p>This is the index page of a fixture site for integration testing.</p>
+<nav class="sidebar">
+  <a href="/page-a.html">Page A</a>
+  <a href="/sub/page-b.html">Page B</a>
+  <a href="javascript:alert(1)">JS link should be filtered</a>
+</nav>
+<script>alert("XSS attempt — must be sanitized")</script>
+</main>
+</body></html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head><title>Code Block Fixture</title></head>
+<body>
+<article class="main">
+  <h1>Code Preservation Test</h1>
+  <p>This page tests that code blocks survive HTML→Markdown conversion intact.</p>
+
+  <h2>Python block</h2>
+  <pre><code class="language-python">def greet(name: str) -&gt; str:
+    """Returns greeting."""
+    return f"Hello, {name}!"
+
+if __name__ == "__main__":
+    print(greet("World"))</code></pre>
+
+  <h2>JavaScript block</h2>
+  <pre><code class="language-javascript">const fetchUser = async (id) =&gt; {
+  const res = await fetch(`/api/users/${id}`);
+  return res.json();
+};</code></pre>
+
+  <h2>Bash block</h2>
+  <pre><code class="language-bash">#!/bin/bash
+for f in *.md; do
+  echo "Processing $f"
+done</code></pre>
+
+  <h2>Inline code</h2>
+  <p>Use <code>npm install</code> to install dependencies. The function is <code>parseInt(value, 10)</code>.</p>
+
+  <h2>No language tag</h2>
+  <pre><code>plain text code
+no language hint here</code></pre>
+</article>
+</body>
+</html>

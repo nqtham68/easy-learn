@@ -1,0 +1,20 @@
+name: nats-docs-git
+source:
+  type: git
+  repo: https://github.com/nats-io/nats.docs
+  branch: master
+  docs_path: .
+  url_base: https://docs.nats.io
+  exclude:
+    - "_examples/**"
+    - "_layouts/**"
+    - "_tools/**"
+    - "assets/**"
+    - "legacy/**"
+    - "zh-cn/**"
+    - "howto-examples/**"
+    - "ngs/**"
+    - "SUMMARY.md"
+    - "FEEDBACK.md"
+    - "building_the_book.md"
+    - "README.md"
