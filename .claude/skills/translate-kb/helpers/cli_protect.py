@@ -14,13 +14,14 @@ from pathlib import Path
 import frontmatter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from normalize_gitbook import normalize
 from protect_code import has_sentinels, protect, restore
 
 
 def cmd_protect(raw_path: Path, tmp_input: Path, blocks_json: Path) -> int:
     raw = raw_path.read_text(encoding="utf-8")
     post = frontmatter.loads(raw)
-    body = post.content
+    body = normalize(post.content)
     protected_body, blocks = protect(body)
     blocks_json.parent.mkdir(parents=True, exist_ok=True)
     blocks_json.write_text(json.dumps(blocks, ensure_ascii=False), encoding="utf-8")

@@ -57,22 +57,59 @@ Use the same glossary as the `translator` agent (see `.claude/agents/translator.
 - Do NOT modify code blocks, placeholders, or English blockquote lines.
 - Do NOT change frontmatter fields except possibly `title` for naturalness.
 
+## Project Feedback File (capture learnings for future translations)
+
+The skill passes a `FEEDBACK` path in your prompt pointing at `_review-feedback.md`. After refining the file, append findings worth propagating to future translations.
+
+**File structure (create if missing):**
+
+```markdown
+# Review Feedback (learned from review passes)
+
+## 1. Glossary Overrides
+| Term | VN gloss | Reason | Source |
+|---|---|---|---|
+
+## 2. Style & Naturalness Rules
+
+## 3. Common Pitfalls to Avoid
+```
+
+**When to append (criteria — be selective):**
+
+- **Section 1 (Glossary):** Append a row when you set a gloss for a term that is either NEW (not in built-in glossary) OR DIFFERENT from the built-in. Skip if your gloss matches built-in.
+- **Section 2 (Style):** Append a one-line rule when a phrasing/style pattern would benefit MULTIPLE future files (not just this one). Format: `- <rule>. _Source: <filename>_`
+- **Section 3 (Pitfalls):** Append a one-line pitfall when you fixed a mistake the translator is likely to repeat (term mistranslation, awkward construction, wrong gloss application). Format: `- <pitfall>. _Source: <filename>_`
+
+**What NOT to append:**
+
+- One-off sentence-level edits that don't generalize.
+- Trivial fixes (typos, spacing).
+- Notes that duplicate existing entries — read the file first; if a similar entry exists, skip.
+
+**Format rules:**
+- One line per entry (concise — sacrifice grammar for brevity).
+- If the file does not exist, create it with the structure above before appending.
+- Append to the correct section; do not reorder existing entries.
+
 ## Workflow
 
 1. **Read** the input file path passed in the prompt.
-2. Walk through the body, paragraph by paragraph:
+2. **Read** the FEEDBACK file if it exists (to avoid duplicating entries).
+3. Walk through the body, paragraph by paragraph:
    - Compare English blockquote with the Vietnamese that follows.
    - Apply fixes from the categories above.
-3. Verify glossary consistency end-to-end:
+4. Verify glossary consistency end-to-end:
    - Build a list of glossary terms appearing in the body.
    - Check inline gloss is on first occurrence only.
    - Check footer matches the appearance set.
-4. Self-checklist:
+5. **Append findings** to the FEEDBACK file per criteria above (only if non-trivial). Create the file with the structure shown if it does not exist.
+6. Self-checklist:
    - [ ] All `<<<__WEBEZ_*__>>>` tokens unchanged and present?
    - [ ] All `> 🇬🇧 *...*` lines unchanged?
    - [ ] Frontmatter unchanged (except possibly polished `title`)?
    - [ ] No glossary terms translated to Vietnamese in body?
    - [ ] Inline glosses use exact VN wording from glossary, first occurrence only?
    - [ ] Footer `## Thuật ngữ trong bài` is complete and sorted?
-5. **Write** the refined content back to the output path (same as input — overwrite).
-6. Return single word: `DONE` (or `FAILED: <reason>`).
+7. **Write** the refined content back to the output path (same as input — overwrite).
+8. Return single word: `DONE` (or `FAILED: <reason>`).

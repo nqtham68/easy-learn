@@ -210,17 +210,28 @@ Notice in the good version:
 - Original English preserved in blockquote
 - Headings translated, not glossed
 
+## Project Feedback File (priority over built-in glossary)
+
+The skill may pass a `FEEDBACK` path in your prompt pointing at `_review-feedback.md`. If passed AND the file exists, **read it first** and apply:
+
+- **Section 1 (Glossary Overrides):** Each row OVERRIDES the built-in glossary above for that term. Use the override VN gloss, not the built-in.
+- **Section 2 (Style & Naturalness Rules):** Apply these as additional style rules during translation.
+- **Section 3 (Common Pitfalls):** Avoid the patterns listed.
+
+If FEEDBACK path is not passed or the file does not exist, proceed with built-in glossary only.
+
 ## Workflow
 
 1. **Read** the input file path passed in the prompt.
-2. Identify frontmatter (YAML between leading `---` lines) — separate from body.
-3. Scan body to identify glossary terms present, decide which 3–5 are "core" for this doc.
-4. Translate body to bilingual format per spec above. Keep all `<<<__WEBEZ_*__>>>` tokens.
-5. Append `## Thuật ngữ trong bài` footer if any glossary terms appeared.
-6. Update frontmatter fields (`title`, `translated`, `translated_at`).
-7. Reassemble: frontmatter + body.
-8. **Write** to the output file path passed in the prompt.
-9. Self-checklist before returning:
+2. **Read** the FEEDBACK file if its path was passed and it exists. Merge overrides into your active glossary.
+3. Identify frontmatter (YAML between leading `---` lines) — separate from body.
+4. Scan body to identify glossary terms present, decide which 3–5 are "core" for this doc.
+5. Translate body to bilingual format per spec above. Keep all `<<<__WEBEZ_*__>>>` tokens.
+6. Append `## Thuật ngữ trong bài` footer if any glossary terms appeared.
+7. Update frontmatter fields (`title`, `translated`, `translated_at`).
+8. Reassemble: frontmatter + body.
+9. **Write** to the output file path passed in the prompt.
+10. Self-checklist before returning:
    - [ ] All `<<<__WEBEZ_*__>>>` tokens still present and unchanged?
    - [ ] Frontmatter has `translated: true`?
    - [ ] Title translated to Vietnamese?

@@ -66,11 +66,18 @@ Translate the markdown file at:
 Write the Vietnamese bilingual translation to:
   OUTPUT: <absolute path to .tmp-output.md>
 
+FEEDBACK: <absolute path to <vi-root>/_review-feedback.md>
+
 Preserve all <<<__WEBEZ_*__>>> tokens exactly. Translate prose only. Update
 frontmatter: title → Vietnamese, translated: true, translated_at: <ISO now>.
 
 Return DONE on success.
 ```
+
+The FEEDBACK path points at `<vi-root>/_review-feedback.md`. The translator
+reads it (if it exists) and applies glossary overrides + style rules from
+prior review passes. The file is created lazily by reviewers — pass the path
+unconditionally, even if the file does not yet exist.
 
 Wait for all subagents in the batch to return. Per Spike A, expect ~1.86× speedup vs sequential.
 
@@ -83,8 +90,15 @@ If `--review-first N > 0`, after a translator subagent's tmp-output is produced 
    Review and refine the Vietnamese bilingual translation at:
      INPUT/OUTPUT: <absolute path to .tmp-output.md>
 
+   FEEDBACK: <absolute path to <vi-root>/_review-feedback.md>
+
    Read the file, apply refinements per your spec (naturalness, glossary
    consistency, inline gloss selection), and overwrite the same path.
+
+   After refining, append generalizable findings (glossary overrides, style
+   rules, common pitfalls) to the FEEDBACK file per the criteria in your
+   agent spec. Create the file with the documented section structure if it
+   does not exist.
 
    Preserve all <<<__WEBEZ_*__>>> tokens, `> 🇬🇧 *...*` blockquote lines,
    and frontmatter fields exactly. Return DONE on success.
@@ -106,8 +120,31 @@ For each completed subagent:
    - Frontmatter has `translated: true`
    - Body length > 30% of original input length (reject obvious truncation)
 4. If all checks pass: atomic write to final `<vi-target>.md` (write `.tmp` then `os.replace`).
-5. Delete `.tmp-input.md`, `.tmp-output.md`, `.blocks.json`.
-6. If checks fail: log `FAIL <file>: <reason>` and leave VN target absent. Subagent's tmp output stays for debugging.
+5. Delete `.tmp-input.md`, `.tmp-output.md`, `.blocks.json` **only on success**.
+6. If checks fail: log `FAIL <file>: <reason>` and leave VN target absent. **Keep tmp files for debugging.** The next skill run will see the missing target and re-attempt.
+
+**CRITICAL — cleanup ordering in shell loops:**
+
+When restoring multiple files in a bash loop, cleanup must be conditional on restore success. WRONG pattern (deletes tmp even on FAIL, losing debug evidence):
+
+```bash
+for f in ...; do
+  cli_protect.py restore ... || echo FAIL
+  rm -f tmp-input tmp-output blocks  # ❌ runs unconditionally
+done
+```
+
+CORRECT pattern (cleanup only when restore succeeds):
+
+```bash
+for f in ...; do
+  if cli_protect.py restore "$f.tmp-output.md" "$f.blocks.json" "$f.md"; then
+    rm -f "$f.tmp-input.md" "$f.tmp-output.md" "$f.blocks.json"
+  else
+    echo "FAIL: $f (tmp files kept for debug)"
+  fi
+done
+```
 
 ### Step 4.4 — Linkify bare URLs
 

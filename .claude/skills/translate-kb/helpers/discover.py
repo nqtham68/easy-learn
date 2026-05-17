@@ -57,7 +57,12 @@ def main() -> int:
 
     pending = []
     skipped = 0
-    for raw in sorted(raw_root.rglob("*.md")):
+    candidates = sorted(raw_root.rglob("*.md"))
+    # When --max-files limits the run, prefer high-content files so test/review
+    # samples are substantive. Otherwise keep alpha order for deterministic full runs.
+    if max_files:
+        candidates.sort(key=lambda p: p.stat().st_size, reverse=True)
+    for raw in candidates:
         vi = vi_target(raw, raw_root, vi_root)
         if not is_pending(vi):
             continue
