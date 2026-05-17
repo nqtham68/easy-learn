@@ -81,6 +81,20 @@ unconditionally, even if the file does not yet exist.
 
 Wait for all subagents in the batch to return. Per Spike A, expect ~1.86× speedup vs sequential.
 
+**Stall handling:** Occasionally a translator subagent stalls and is killed by
+the harness watchdog (typically after ~600s of no output). The notification
+arrives with `status: failed` and a summary like "Agent stalled: no progress
+for 600s". When this happens:
+
+1. Do NOT re-run protect — the `.tmp-input.md` and `.blocks.json` are still
+   valid on disk.
+2. Re-spawn a fresh `translator` subagent with the same INPUT/OUTPUT/FEEDBACK
+   paths. The next attempt usually succeeds (the stall is usually a network
+   blip, not a bad input).
+3. Continue restore + validation as normal once the retry returns DONE.
+
+A single retry counts as "completed", not "failed", in the Step 5 summary.
+
 ### Step 3.5 — Review pass (optional, --review-first N)
 
 If `--review-first N > 0`, after a translator subagent's tmp-output is produced (and before code restore), for the first N files of the run:
@@ -153,7 +167,7 @@ where markdown auto-link syntax doesn't work. Run the linkifier to wrap them
 in `<a href>`:
 
 ```bash
-.venv/Scripts/python.exe cli.py linkify <vi-root> [<vi-file>...]
+.venv/Scripts/python.exe .claude/skills/translate-kb/helpers/linkify_urls.py <vi-root> [<vi-file>...]
 ```
 
 Already-formatted markdown links and code blocks are preserved.
@@ -164,7 +178,7 @@ After all files in the run are restored and atomically written, run the link
 rewriter once across all newly-written VN files:
 
 ```bash
-.venv/Scripts/python.exe cli.py rewrite-links <raw-root> <vi-root> [<vi-file>...]
+.venv/Scripts/python.exe .claude/skills/translate-kb/helpers/rewrite_all_links.py <raw-root> <vi-root> [<vi-file>...]
 ```
 
 This converts links like `https://docs.nats.io/<path>` and site-root-relative
