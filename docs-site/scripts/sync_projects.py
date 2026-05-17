@@ -100,8 +100,10 @@ def main() -> int:
         slug = vi.parent.name
         target = args.dest / slug
         n = sync_one(vi, target)
+        title = PROJECT_TITLES.get(slug, slug.replace("-", " ").title())
+        (target / ".nav.yml").write_text(f"title: {title}\n", encoding="utf-8")
         projects.append((slug, target))
-        print(f"synced {slug}: {n} files")
+        print(f"synced {slug}: {n} files (title: {title})")
 
     write_landing(args.dest, projects)
     print(f"\nlanding page written: {args.dest / 'index.md'}")
