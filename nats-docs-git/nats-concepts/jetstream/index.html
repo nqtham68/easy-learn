@@ -1,0 +1,10082 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tổng hợp các bản dịch tiếng Việt của tài liệu kỹ thuật mã nguồn mở">
+      
+      
+      
+      
+        <link rel="prev" href="../core-nats/request-reply/reqreply_walkthrough/">
+      
+      
+        <link rel="next" href="consumers/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>JetStream - Tài liệu kỹ thuật (Bản dịch tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jetstream" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../../.." title="Tài liệu kỹ thuật (Bản dịch tiếng Việt)" class="md-header__button md-logo" aria-label="Tài liệu kỹ thuật (Bản dịch tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tài liệu kỹ thuật (Bản dịch tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JetStream
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang chế độ tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang chế độ tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang chế độ sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang chế độ sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Trang chủ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../_review-feedback/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Nats docs git
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Tài liệu kỹ thuật (Bản dịch tiếng Việt)" class="md-nav__button md-logo" aria-label="Tài liệu kỹ thuật (Bản dịch tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tài liệu kỹ thuật (Bản dịch tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trang chủ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats docs git
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats docs git
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../_review-feedback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Review Feedback (learned from review passes)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature_comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    So Sánh Tính Năng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tài liệu tham khảo NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_1" id="__nav_2_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_1_1" id="__nav_2_5_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_5_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connecting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/developer/connecting/name/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đặt Tên Kết Nối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_2" id="__nav_2_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats streaming
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats streaming
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5_2_1" id="__nav_2_5_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gettingstarted
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_5_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gettingstarted
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docs/nats_streaming/gettingstarted/intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bắt Đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../docs/nats_tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác nhận nhận tin (Acknowledgements)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adaptive_edge_deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Các Kiến Trúc Triển Khai Linh Hoạt của NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../connectivity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kết nối NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bảo mật
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seq_num/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Số Thứ Tự (Sequence Numbers)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../service_infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hạ tầng dịch vụ NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subject_mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subject Mapping và Transforms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subjects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nhắn Tin Dựa Trên Subject
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../core-nats/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core nats
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6_9" id="__nav_2_6_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core nats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9_2" id="__nav_2_6_9_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publish subscribe
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_6_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Publish subscribe
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/publish-subscribe/pubsub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publish-Subscribe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/publish-subscribe/pubsub_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn thực hành NATS Pub/Sub
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9_3" id="__nav_2_6_9_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Queue groups
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_6_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Queue groups
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/queue-groups/queue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Queue Groups
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/queue-groups/queues_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn NATS Queueing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_9_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_9_4" id="__nav_2_6_9_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Request reply
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_6_9_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_9_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Request reply
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/request-reply/reqreply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Request-Reply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core-nats/request-reply/reqreply_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn thực hành NATS Request-Reply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_10" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jetstream
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_2_6_10" id="__nav_2_6_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_6_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jetstream
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="consumers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consumer trong JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="example_configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ví dụ cấu hình
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="headers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Headers trong JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="js_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn thực hành NATS JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="source_and_mirror/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stream Source và Mirror
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="source_and_mirror_example/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ví dụ cấu hình Source và Mirror
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streams (Luồng message lưu trữ liên tục)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_10_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="key-value-store/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key value store
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6_10_9" id="__nav_2_6_10_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_6_10_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_10_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Key value store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="key-value-store/kv_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn sử dụng Key/Value Store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_10_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_10_10" id="__nav_2_6_10_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object store
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_6_10_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_10_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Object store
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="object-store/obj_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="object-store/obj_walkthrough/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng Dẫn Sử Dụng Object Store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6_11" id="__nav_2_6_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/compare-nats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    So sánh NATS với các công nghệ khác
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../what-is-nats/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What is nats
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_6_12" id="__nav_2_6_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_6_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    What is nats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../what-is-nats/walkthrough_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết lập Môi trường Walkthrough
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7" id="__nav_2_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cách Đóng Góp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Câu hỏi thường gặp (FAQ)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NATS.io Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_7_4" id="__nav_2_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats protocol
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats protocol
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/nats-protocol/nats-protocol-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Demo Giao Thức NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/nats-protocol/nats-server-protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NATS Cluster Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/nats-protocol/nats-protocol/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats protocol
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_7_4_3" id="__nav_2_7_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_7_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats protocol
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/nats-protocol/nats-protocol/nats-client-dev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phát triển một Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_8" id="__nav_2_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Release notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Có Gì Mới!
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_20/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NATS 2.0 - Tính năng mới
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_22/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Điểm mới trong NATS 2.2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_210/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tính năng mới trong NATS 2.10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_211/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Điểm mới trong NATS 2.11
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_212/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Có gì mới trong NATS 2.12
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/whats_new_214/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Điểm mới trong NATS 2.14
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_9" id="__nav_2_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running a nats service
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Running a nats service
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/clients/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NATS Server - Kết Nối Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Các lưu ý về môi trường triển khai
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt NATS Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5" id="__nav_2_9_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/configuring_subject_mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subject Mapping và Định Hình Lưu Lượng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bật Tính Năng Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/ocsp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCSP Stapling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/websocket/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình WebSocket
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/clustering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Clustering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_7" id="__nav_2_9_5_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Clustering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/clustering/cluster_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình Clustering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/clustering/cluster_tls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực TLS trong Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/clustering/v2_routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Routes v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_7_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/clustering/jetstream_clustering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jetstream clustering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_7_5" id="__nav_2_9_5_7_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_9_5_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jetstream clustering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/clustering/jetstream_clustering/administration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quản trị JetStream Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/clustering/jetstream_clustering/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xử lý sự cố
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/gateways/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gateways
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_8" id="__nav_2_9_5_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gateways
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/gateways/gateway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình Gateway
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_9_5_9" id="__nav_2_9_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jetstream config
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jetstream config
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/jetstream-config/resource_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_9_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/jetstream-config/configuration_mgmt/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration mgmt
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_9_2" id="__nav_2_9_5_9_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_9_5_9_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_9_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configuration mgmt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/jetstream-config/configuration_mgmt/github_actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitHub Actions cho JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/jetstream-config/configuration_mgmt/kubernetes_controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kubernetes Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/jetstream-config/configuration_mgmt/nats-admin-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Quản trị NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/jetstream-config/configuration_mgmt/terraform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terraform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/leafnodes/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leafnodes
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_10" id="__nav_2_9_5_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Leafnodes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/leafnodes/jetstream_leafnodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leaf Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/leafnodes/leafnode_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình Leaf Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/mqtt/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mqtt
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_11" id="__nav_2_9_5_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mqtt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/mqtt/mqtt_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/mqtt/mqtt_config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình MQTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/securing_nats/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Securing nats
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_12" id="__nav_2_9_5_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Securing nats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/accounts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Tenancy sử dụng Accounts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_callout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth Callout - Ủy quyền xác thực
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/authorization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân Quyền
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/tls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bật TLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_12_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auth intro
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_12_6" id="__nav_2_9_5_12_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_9_5_12_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_12_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Auth intro
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/auth_timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thời Gian Chờ Xác Thực
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/nkey_auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NKeys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/tls_mutual_auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực TLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Token Xác Thực
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/auth_intro/username_password/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tên người dùng/Mật khẩu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_12_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/securing_nats/jwt/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jwt
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_12_7" id="__nav_2_9_5_12_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_9_5_12_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_12_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jwt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/jwt/jwt_nkey_auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết Lập Xác Thực/Phân Quyền Hỗn Hợp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/jwt/mem_resolver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng Dẫn Memory Resolver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/securing_nats/jwt/resolver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tra cứu Account bằng Resolver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/sys_accounts/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sys accounts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_13" id="__nav_2_9_5_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sys accounts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/sys_accounts/sys_accounts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Events & Hướng Dẫn Decentralized JWT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_5_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/configuration/websocket/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Websocket
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_5_14" id="__nav_2_9_5_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_5_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_5_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Websocket
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/configuration/websocket/websocket_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cấu hình WebSocket
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_9_6" id="__nav_2_9_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats on kubernetes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats on kubernetes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats-on-kubernetes/nats-kubernetes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/nats_admin/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats admin
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_7" id="__nav_2_9_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats admin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jwt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng Dẫn Chuyên Sâu về JWT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/lame_duck_mode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chế Độ Lame Duck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/profiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiling NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quản lý Bảo mật NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/signals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Signals (Tín hiệu hệ thống)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/slow_consumers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slow Consumers (Consumer xử lý chậm)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/upgrading_cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nâng cấp Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_7_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/nats_admin/jetstream_admin/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jetstream admin
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_7_9" id="__nav_2_9_7_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_7_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_7_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jetstream admin
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/account/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thông Tin Tài Khoản
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/consumers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Consumer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/disaster_recovery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Khôi Phục Thảm Họa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/encryption_at_rest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mã hóa dữ liệu lưu trữ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/naming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đặt tên cho Stream, Consumer và Account
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sao Chép Dữ Liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/jetstream_admin/streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quản lý Stream trong JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_7_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/nats_admin/monitoring/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Monitoring
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_7_10" id="__nav_2_9_7_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_7_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_7_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Monitoring
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/nats_admin/monitoring/monitoring_jetstream/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giám sát JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/running/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Running
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_8" id="__nav_2_9_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_9_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Running
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/flags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Các Flag Khởi Động NATS Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/windows_srv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_9_8_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../running-a-nats-service/running/nats_docker/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats docker
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_9_8_4" id="__nav_2_9_8_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_9_8_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_9_8_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats docker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/nats_docker/docker_swarm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Swarm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/nats_docker/jetstream_docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chạy JetStream trong Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/nats_docker/nats-docker-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn thực hành NATS Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/nats_docker/ngs-docker-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python và NGS chạy trong Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../running-a-nats-service/running/nats_docker/ngs-leafnodes-docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chạy leaf node Synadia Cloud (NGS) trong Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10" id="__nav_2_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using nats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using nats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10_1" id="__nav_2_10_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developing with nats
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_10_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developing with nats
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/anatomy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bạn dùng NATS để làm gì?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cách Phát Triển với NATS Client API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/connecting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_3" id="__nav_2_10_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Connecting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/cluster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kết nối đến Cluster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/connect_timeout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đặt Thời Gian Chờ Kết Nối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/default_server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kết nối đến Server Mặc định
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Các tính năng kết nối bổ sung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/name/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tên Connection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/noecho/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tắt Tính Năng Echo Message
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/pingpong/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giao thức Ping/Pong
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/specific_server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kết nối tới một Server cụ thể
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_3_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10_1_3_10" id="__nav_2_10_1_3_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_10_1_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_3_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Security
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/security/creds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực bằng Credentials File
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/security/nkey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực bằng NKey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/security/tls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mã hóa kết nối với TLS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/security/token/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực bằng Token
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/connecting/security/userpass/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác thực bằng Tên người dùng và Mật khẩu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/events/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Events
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_4" id="__nav_2_10_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Events
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/events/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lắng Nghe Sự Kiện Kết Nối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/events/slow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Slow Consumer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10_1_5" id="__nav_2_10_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Js
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Js
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/consumers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JetStream Consumers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JetStream context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/kv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key Value Store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/object/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/publish/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publish lên Streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/js/streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quản lý Stream và Consumer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/receiving/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Receiving
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_6" id="__nav_2_10_1_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Receiving
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subscription Bất Đồng Bộ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/drain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drain Message Trước Khi Ngắt Kết Nối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/queues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Queue Subscriptions (Đăng ký theo nhóm hàng đợi)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/reply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phản hồi một Message
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dữ liệu có cấu trúc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/sync/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subscription Đồng Bộ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/unsub_after/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hủy Đăng Ký Sau N Message
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/unsubscribing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hủy đăng ký nhận message
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/receiving/wildcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đăng Ký Wildcard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/reconnect/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reconnect
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_7" id="__nav_2_10_1_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reconnect
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/buffer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Buffer Message Khi Đang Thử Kết Nối Lại
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/disable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tắt tính năng Reconnect
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lắng Nghe Các Sự Kiện Reconnect
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/max/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đặt Số Lần Thử Kết Nối Lại Tối Đa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/random/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tránh Hiện Tượng Thundering Herd
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/reconnect/wait/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tạm Dừng Giữa Các Lần Thử Kết Nối Lại
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/sending/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sending
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_8" id="__nav_2_10_1_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Sending
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/sending/caches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cache, Flush và Ping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/sending/replyto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đính kèm Reply Subject
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/sending/request_reply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ngữ nghĩa Request-Reply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/sending/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gửi Dữ Liệu Có Cấu Trúc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/services/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_1_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/developing-with-nats/tutorials/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_1_10" id="__nav_2_10_1_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_1_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_1_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/developing-with-nats/tutorials/custom_dialer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kết nối nâng cao và Custom Dialer trong Go
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_10_2" id="__nav_2_10_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jetstream
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_10_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Jetstream
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/jetstream/develop_jetstream/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phát triển ứng dụng với JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/jetstream/model_deep_dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Khám Phá Sâu Mô Hình JetStream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/jetstream/nats_api_reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tài liệu tham khảo NATS API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_2_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/jetstream/concepts/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_2_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/jetstream/getting_started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_2_5" id="__nav_2_10_2_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/jetstream/getting_started/using_source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sử Dụng Source Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/nats-tools/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats tools
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_3" id="__nav_2_10_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_10_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats tools
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Công cụ nk — Tạo và quản lý NKeys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/nats-tools/nats_cli/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats cli
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_3_3" id="__nav_2_10_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats cli
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nats_cli/natsbench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    nats bench - Đo hiệu năng NATS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_3_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/nats-tools/nats_top/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nats top
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_3_4" id="__nav_2_10_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nats top
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nats_top/nats-top-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn nats-top
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_10_3_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../using-nats/nats-tools/nsc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nsc
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_10_3_5" id="__nav_2_10_3_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_10_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_10_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Nsc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức cơ bản về NSC
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/managed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Managed Operators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/revocation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thu hồi quyền truy cập (Revocation)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services (Dịch vụ)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/signing_keys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Signing Keys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-nats/nats-tools/nsc/streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Streams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cac-tinh-nang-bo-sung-uoc-kich-hoat-boi-jetstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các tính năng bổ sung được kích hoạt bởi JetStream
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cau-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cấu hình
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví dụ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#muc-tieu-thiet-ke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mục tiêu thiết kế
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-tinh-nang-cua-jetstream" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các tính năng của JetStream
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các tính năng của JetStream">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#streaming-tach-roi-thoi-gian-giua-publisher-va-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streaming: tách rời thời gian giữa publisher và subscriber
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luu-tru-phan-tan-ben-vung-va-nhat-quan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lưu trữ phân tán bền vững và nhất quán
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-control-tach-roi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow control tách rời
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exactly-once-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exactly once semantics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-value-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Value Store
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Value Store">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#watch-va-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Watch và History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cap-nhat-atomic-va-locking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cập nhật atomic và locking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Store
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#legacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thuat-ngu-trong-bai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật ngữ trong bài
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="jetstream">JetStream<a class="headerlink" href="#jetstream" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>🇬🇧 <em>NATS has a built-in persistence engine called <a href="https://docs.nats.io/using-nats/jetstream/develop_jetstream">JetStream</a> which enables messages to be stored and replayed at a later time. Unlike <em>NATS Core</em> which requires you to have an active subscription to process messages as they happen, JetStream allows the NATS server to capture messages and replay them to consumers as needed. This functionality enables a different quality of service for your NATS messages, and enables fault-tolerant and high-availability configurations.</em></p>
+</blockquote>
+<p>NATS tích hợp sẵn engine lưu trữ có tên <a href="https://docs.nats.io/using-nats/jetstream/develop_jetstream">JetStream</a>, cho phép lưu trữ message và phát lại sau. Khác với <em>NATS Core</em> — yêu cầu subscription đang hoạt động để nhận message theo thời gian thực — JetStream cho phép NATS server bắt giữ message và phát lại cho consumer (bên xử lý dữ liệu từ stream) theo yêu cầu. Tính năng này mang lại chất lượng dịch vụ cao hơn và hỗ trợ cấu hình fault-tolerant và high-availability.</p>
+<blockquote>
+<p>🇬🇧 <em>JetStream is built into <code>nats-server</code>. If you have a cluster of JetStream-enabled servers you can enable data replication and thus guard against failures and service disruptions.</em></p>
+</blockquote>
+<p>JetStream được tích hợp sẵn trong <code>nats-server</code>. Nếu có một cluster (cụm nhiều server chạy chung) các server đã bật JetStream, bạn có thể kích hoạt data replication để bảo vệ khỏi lỗi và gián đoạn dịch vụ.</p>
+<blockquote>
+<p>🇬🇧 <em>JetStream was created to address the problems identified with streaming technology today - complexity, fragility, and a lack of scalability. Some technologies address these better than others, but no current streaming technology is truly multi-tenant, horizontally scalable, or supports multiple deployment models. No other technology that we are aware of can scale from edge to cloud using the same security context while having complete deployment observability for operations.</em></p>
+</blockquote>
+<p>JetStream được tạo ra để giải quyết các vấn đề của công nghệ streaming hiện nay: sự phức tạp, tính dễ vỡ, và thiếu khả năng mở rộng. Một số công nghệ giải quyết những vấn đề này tốt hơn, nhưng chưa có công nghệ streaming nào thực sự multi-tenant, horizontally scalable, hay hỗ trợ nhiều mô hình triển khai. Cũng chưa có công nghệ nào có thể scale từ edge đến cloud trong cùng một security context với khả năng quan sát triển khai đầy đủ cho vận hành.</p>
+<h4 id="cac-tinh-nang-bo-sung-uoc-kich-hoat-boi-jetstream">Các tính năng bổ sung được kích hoạt bởi JetStream<a class="headerlink" href="#cac-tinh-nang-bo-sung-uoc-kich-hoat-boi-jetstream" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>The JetStream persistence layer enables additional use cases typically not found in messaging systems. Being built on top of JetStream they inherit the core capabilities of JetStream, replication, security, routing limits, and mirroring.</em></p>
+</blockquote>
+<p>Lớp lưu trữ của JetStream mở ra các use case thường không có trong các hệ thống messaging. Vì được xây dựng trên JetStream, chúng kế thừa các tính năng cốt lõi: replication, bảo mật, giới hạn routing, và mirroring.</p>
+<ul>
+<li><a href=".#key-value-store">Key Value Store</a> — map (mảng kết hợp) với các thao tác atomic</li>
+<li><a href=".#object-store">Object Store</a> — API truyền file, replication và lưu trữ. Sử dụng chunked transfer để mở rộng quy mô.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>Key/Value and File transfer are capabilities commonly found in in-memory databases or deployment tools. While NATS does not intend to compete with the feature set of such tools, it is our goal to provide the developer with reasonable complete set of data storage and replications features for use cases like micro service, edge deployments and server management.</em></p>
+</blockquote>
+<p>Key/Value và File transfer là các tính năng thường thấy trong in-memory database hoặc công cụ triển khai. NATS không có ý định cạnh tranh với bộ tính năng đầy đủ của những công cụ đó, nhưng mục tiêu là cung cấp cho developer một bộ tính năng lưu trữ và replication đủ dùng cho các use case như microservice, edge deployment và quản lý server.</p>
+<h4 id="cau-hinh">Cấu hình<a class="headerlink" href="#cau-hinh" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>To configure a <code>nats-server</code> with JetStream refer to:</em></p>
+</blockquote>
+<p>Để cấu hình <code>nats-server</code> với JetStream, tham khảo:</p>
+<ul>
+<li><a href="https://docs.nats.io/running-a-nats-service/configuration/jetstream-config/resource_management">Configuring JetStream</a></li>
+<li><a href="https://docs.nats.io/running-a-nats-service/configuration/clustering/jetstream_clustering">JetStream Clustering</a></li>
+</ul>
+<h4 id="vi-du">Ví dụ<a class="headerlink" href="#vi-du" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>For runnable JetStream code examples, refer to <a href="https://natsbyexample.com">NATS by Example</a>.</em></p>
+</blockquote>
+<p>Để xem các ví dụ code JetStream có thể chạy được, tham khảo <a href="https://natsbyexample.com">NATS by Example</a>.</p>
+<h4 id="muc-tieu-thiet-ke">Mục tiêu thiết kế<a class="headerlink" href="#muc-tieu-thiet-ke" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>JetStream was developed with the following goals in mind:</em></p>
+</blockquote>
+<p>JetStream được phát triển với các mục tiêu sau:</p>
+<ul>
+<li>Hệ thống phải dễ cấu hình, vận hành và có thể quan sát được.</li>
+<li>Hệ thống phải an toàn và hoạt động tốt với mô hình bảo mật NATS 2.0.</li>
+<li>Hệ thống phải mở rộng theo chiều ngang và phù hợp với tốc độ nhập dữ liệu cao.</li>
+<li>Hệ thống phải hỗ trợ nhiều use case.</li>
+<li>Hệ thống phải tự phục hồi.</li>
+<li>Hệ thống phải cho phép NATS message tham gia vào stream khi cần.</li>
+<li>Hệ thống phải hoạt động bất khả tri với payload.</li>
+<li>Hệ thống không được phụ thuộc vào thư viện bên thứ ba.</li>
+</ul>
+<h3 id="cac-tinh-nang-cua-jetstream">Các tính năng của JetStream<a class="headerlink" href="#cac-tinh-nang-cua-jetstream" title="Permanent link">&para;</a></h3>
+<h4 id="streaming-tach-roi-thoi-gian-giua-publisher-va-subscriber">Streaming: tách rời thời gian giữa publisher và subscriber<a class="headerlink" href="#streaming-tach-roi-thoi-gian-giua-publisher-va-subscriber" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>One of the tenets of basic publish/subscribe messaging is that there is a required temporal coupling between the publishers and the subscribers: subscribers only receive the messages that are published when they are actively connected to the messaging system (i.e. they do not receive messages that are published while they are not subscribing or not running or disconnected). The traditional way for messaging systems to provide temporal decoupling of the publishers and subscribers is through the 'durable subscriber' functionality or sometimes through 'queues', but neither one is perfect:</em></p>
+</blockquote>
+<p>Một nguyên tắc cơ bản của publish/subscribe là sự ràng buộc thời gian giữa publisher (bên gửi message) và subscriber (bên đăng ký nhận message): subscriber chỉ nhận được message khi đang kết nối — không nhận được message gửi lúc nó offline. Cách truyền thống để tách rời thời gian là dùng "durable subscriber" hoặc "queue", nhưng cả hai đều không hoàn hảo:</p>
+<ul>
+<li>durable subscriber phải được tạo <em>trước</em> khi message được gửi</li>
+<li>queue dùng để phân phối và xử lý công việc, không phải để phát lại message.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>However, in many use cases, you do not need to 'consume exactly once' functionality but rather the ability to replay messages on demand, as many times as you want. This need has led to the popularity of some 'streaming' messaging platforms.</em></p>
+</blockquote>
+<p>Tuy nhiên, trong nhiều use case, không cần chức năng "consume exactly once" mà chỉ cần khả năng phát lại message theo yêu cầu, bao nhiêu lần tùy thích. Nhu cầu này đã thúc đẩy sự phổ biến của các nền tảng "streaming".</p>
+<blockquote>
+<p>🇬🇧 <em>JetStream provides <em>both</em> the ability to <em>consume</em> messages as they are published (i.e. 'queueing') as well as the ability to <em>replay</em> messages on demand (i.e. 'streaming'). See <a href=".#Retention-policies-and-limits">retention policies</a> below.</em></p>
+</blockquote>
+<p>JetStream cung cấp <em>cả hai</em>: khả năng <em>consume</em> message ngay khi được gửi (tức "queueing") lẫn khả năng <em>phát lại</em> message theo yêu cầu (tức "streaming"). Xem <a href=".#Retention-policies-and-limits">retention policies</a> bên dưới.</p>
+<p><strong>Chính sách phát lại (Replay policies)</strong></p>
+<blockquote>
+<p>🇬🇧 <em>JetStream consumers support multiple replay policies, depending on whether the consuming application wants to receive either:</em></p>
+</blockquote>
+<p>JetStream consumer hỗ trợ nhiều replay policy, tùy theo nhu cầu của ứng dụng muốn nhận:</p>
+<ul>
+<li><em>Tất cả</em> message đang lưu trong stream — nghĩa là phát lại toàn bộ. Tốc độ phát lại có thể chọn:</li>
+<li><em>instant</em> — message được gửi đến consumer nhanh nhất có thể.</li>
+<li><em>original</em> — message được gửi với tốc độ bằng lúc chúng được publish vào stream, hữu ích cho staging traffic production.</li>
+<li>Message <em>cuối cùng</em> trong stream, hoặc <em>message cuối cho từng subject</em> (vì stream có thể thu thập nhiều subject).</li>
+<li>Bắt đầu từ một <em>sequence number</em> cụ thể.</li>
+<li>Bắt đầu từ một <em>thời điểm</em> cụ thể.</li>
+</ul>
+<p><strong>Chính sách lưu trữ (Retention policies) và giới hạn</strong></p>
+<blockquote>
+<p>🇬🇧 <em>JetStream enables new functionalities and higher qualities of service on top of the base 'Core NATS' functionality. However, practically speaking, streams can't always just keep growing 'forever' and therefore JetStream supports multiple retention policies as well as the ability to impose size limits on streams.</em></p>
+</blockquote>
+<p>JetStream bổ sung các tính năng mới và chất lượng dịch vụ cao hơn trên nền Core NATS. Tuy nhiên, thực tế stream (luồng message lưu trữ liên tục) không thể tăng trưởng mãi, vì vậy JetStream hỗ trợ nhiều retention policy và giới hạn kích thước stream.</p>
+<p><strong>Giới hạn</strong></p>
+<blockquote>
+<p>🇬🇧 <em>You can impose the following limits on a stream</em></p>
+</blockquote>
+<p>Bạn có thể đặt các giới hạn sau cho một stream:</p>
+<ul>
+<li>Tuổi tối đa của message.</li>
+<li>Tổng kích thước tối đa của stream (tính bằng bytes).</li>
+<li>Số lượng message tối đa trong stream.</li>
+<li>Kích thước tối đa của mỗi message.</li>
+<li>Số lượng consumer tối đa được định nghĩa cho stream tại bất kỳ thời điểm nào.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>You must also select a </em><em>discard policy</em><em> which specifies what should happen once the stream has reached one of its limits and a new message is published:</em></p>
+</blockquote>
+<p>Bạn cũng phải chọn một <strong>discard policy</strong> — xác định hành động khi stream đạt giới hạn và có message mới được gửi đến:</p>
+<ul>
+<li><em>discard old</em> — stream tự xóa message cũ nhất để nhường chỗ cho message mới.</li>
+<li><em>discard new</em> — message mới bị bỏ (lệnh publish JetStream trả về lỗi báo đã đạt giới hạn).</li>
+</ul>
+<p><strong>Retention policy</strong></p>
+<blockquote>
+<p>🇬🇧 <em>You can choose what kind of retention you want for each stream:</em></p>
+</blockquote>
+<p>Bạn có thể chọn loại retention cho từng stream:</p>
+<ul>
+<li><em>limits</em> (mặc định) — lưu để phát lại message trong stream.</li>
+<li><em>work queue</em> — stream hoạt động như shared queue, message bị xóa sau khi được consume — dùng cho exactly-once consumption.</li>
+<li><em>interest</em> — message được giữ chừng nào còn consumer chưa nhận. Là biến thể của work queue, chỉ giữ message nếu có consumer đang quan tâm đến subject của message.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>Note that regardless of the retention policy selected, the limits (and the discard policy) <em>always</em> apply.</em></p>
+</blockquote>
+<p>Lưu ý: dù chọn retention policy nào, các giới hạn (và discard policy) <em>luôn luôn</em> được áp dụng.</p>
+<p><strong>Biến đổi subject mapping</strong></p>
+<blockquote>
+<p>🇬🇧 <em>JetStream also enables the ability to apply subject mapping transformations to messages as they are ingested into a stream.</em></p>
+</blockquote>
+<p>JetStream cũng cho phép áp dụng subject mapping transformation cho message khi chúng được đưa vào stream.</p>
+<h4 id="luu-tru-phan-tan-ben-vung-va-nhat-quan">Lưu trữ phân tán bền vững và nhất quán<a class="headerlink" href="#luu-tru-phan-tan-ben-vung-va-nhat-quan" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>You can choose the durability as well as the resilience of the message storage according to your needs.</em></p>
+</blockquote>
+<p>Bạn có thể chọn độ bền lưu trữ và khả năng chịu lỗi phù hợp với nhu cầu:</p>
+<ul>
+<li>Lưu trữ trên bộ nhớ (Memory storage).</li>
+<li>Lưu trữ trên file (File storage).</li>
+<li>Replication (1 (không), 2, 3) giữa các NATS server để Fault Tolerance.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>JetStream uses a NATS optimized RAFT distributed quorum algorithm to distribute the persistence service between NATS servers in a cluster while maintaining immediate consistency (as opposed to <a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventual consistency</a>) even in the face of failures.</em></p>
+</blockquote>
+<p>JetStream sử dụng thuật toán RAFT distributed quorum được tối ưu hóa cho NATS để phân phối dịch vụ lưu trữ giữa các NATS server trong một cluster, đồng thời duy trì tính nhất quán tức thì (thay vì <a href="https://en.wikipedia.org/wiki/Eventual_consistency">eventual consistency</a>) ngay cả khi có lỗi xảy ra.</p>
+<blockquote>
+<p>🇬🇧 <em>For writes (publications to a stream), the formal consistency model of NATS JetStream is <a href="https://jepsen.io/consistency/models/linearizable">Linearizable</a>. On the read side (listening to or replaying messages from streams) the formal models don't really apply because JetStream does not support atomic batching of multiple operations together (so the only kind of 'transaction' is the persisting, replicating and voting of a single operation on the stream) but in essence, JetStream is <a href="https://jepsen.io/consistency/models/serializable">serializable</a> because messages are added to a stream in one global order (which you can control using compare and publish).</em></p>
+</blockquote>
+<p>Đối với ghi (publish lên stream), mô hình nhất quán chính thức của NATS JetStream là <a href="https://jepsen.io/consistency/models/linearizable">Linearizable</a>. Về phía đọc (lắng nghe hoặc phát lại message từ stream), các mô hình chính thức không thực sự áp dụng vì JetStream không hỗ trợ batching atomic nhiều thao tác cùng lúc (đơn vị "transaction" duy nhất là việc lưu trữ, replicate và vote cho một thao tác trên stream). Về bản chất, JetStream là <a href="https://jepsen.io/consistency/models/serializable">serializable</a> vì message được thêm vào stream theo một thứ tự toàn cục duy nhất (có thể kiểm soát bằng compare and publish).</p>
+<blockquote>
+<p>🇬🇧 <em>Do note, while we do guarantee immediate consistency when it comes to <a href="https://jepsen.io/consistency/models/monotonic-writes">monotonic writes</a> and <a href="https://jepsen.io/consistency/models/monotonic-reads">monotonic reads</a>. We don't guarantee <a href="https://jepsen.io/consistency/models/read-your-writes">read your writes</a> at this time, as reads through <em>direct get</em> requests may be served by followers or mirrors. More consistent results can be achieved by sending get requests to the stream leader.</em></p>
+</blockquote>
+<p>Lưu ý: chúng tôi đảm bảo tính nhất quán tức thì với <a href="https://jepsen.io/consistency/models/monotonic-writes">monotonic writes</a> và <a href="https://jepsen.io/consistency/models/monotonic-reads">monotonic reads</a>, nhưng chưa đảm bảo <a href="https://jepsen.io/consistency/models/read-your-writes">read your writes</a>, vì các request <em>direct get</em> có thể được phục vụ bởi follower hoặc mirror. Để có kết quả nhất quán hơn, hãy gửi get request đến stream leader.</p>
+<blockquote>
+<p>🇬🇧 <em>JetStream can also provide encryption at rest of the messages being stored.</em></p>
+</blockquote>
+<p>JetStream cũng có thể mã hóa message khi lưu trữ (encryption at rest).</p>
+<blockquote>
+<p>🇬🇧 <em>In JetStream the configuration for storing messages is defined separately from how they are consumed. Storage is defined in a <a href="streams/"><em>Stream</em></a> and consuming messages is defined by multiple <a href="consumers/"><em>Consumers</em></a>.</em></p>
+</blockquote>
+<p>Trong JetStream, cấu hình lưu trữ message được định nghĩa tách biệt với cách consume chúng. Lưu trữ được định nghĩa trong một <a href="streams/"><em>Stream</em></a>, còn việc consume message được định nghĩa bởi nhiều <a href="consumers/"><em>Consumer</em></a>.</p>
+<p><strong>Hệ số replication của stream</strong></p>
+<blockquote>
+<p>🇬🇧 <em>A stream's replication factor (R, often referred to as the number 'Replicas') determines how many places it is stored allowing you to tune to balance risk with resource usage and performance. A stream that is easily rebuilt or temporary might be memory-based with a R=1 and a stream that can tolerate some downtime might be file-based R-1.</em></p>
+</blockquote>
+<p>Hệ số replication của stream (R, thường gọi là số 'Replicas') xác định stream được lưu ở bao nhiêu nơi, giúp cân bằng rủi ro với tài nguyên và hiệu năng. Stream dễ rebuild hoặc tạm thời có thể dùng bộ nhớ với R=1; stream chịu được một khoảng downtime có thể dùng file với R=1.</p>
+<blockquote>
+<p>🇬🇧 <em>Typical usage to operate in typical outages and balance performance would be a file-based stream with R=3. A highly resilient, but less performant and more expensive configuration is R=5, the replication factor limit.</em></p>
+</blockquote>
+<p>Để vận hành tốt trong các sự cố thông thường và cân bằng hiệu năng, cấu hình phổ biến là file-based stream với R=3. Cấu hình R=5 cho khả năng phục hồi cao nhất nhưng kém hiệu năng hơn và tốn chi phí hơn — đây là giới hạn replication factor.</p>
+<blockquote>
+<p>🇬🇧 <em>Rather than defaulting to the maximum, we suggest selecting the best option based on the use case behind the stream. This optimizes resource usage to create a more resilient system at scale.</em></p>
+</blockquote>
+<p>Thay vì chọn giá trị tối đa mặc định, hãy chọn tùy vào use case cụ thể. Cách này tối ưu tài nguyên và tạo ra hệ thống có khả năng chịu lỗi tốt hơn ở quy mô lớn.</p>
+<ul>
+<li>Replicas=1 — Không hoạt động khi server phục vụ stream bị lỗi. Hiệu năng cao nhất.</li>
+<li>Replicas=2 — Không có lợi ích đáng kể hiện tại. Khuyến nghị dùng Replicas=3 thay thế.</li>
+<li>Replicas=3 — Chịu được mất một server. Cân bằng lý tưởng giữa rủi ro và hiệu năng.</li>
+<li>Replicas=4 — Không có lợi ích đáng kể hơn Replicas=3, trừ trường hợp cụm 5 node.</li>
+<li>Replicas=5 — Chịu được mất đồng thời hai server. Giảm thiểu rủi ro nhưng hiệu năng thấp hơn.</li>
+</ul>
+<p><strong>Mirroring và Sourcing giữa các stream</strong></p>
+<blockquote>
+<p>🇬🇧 <em>JetStream also allows server administrators to easily mirror streams, for example between different JetStream domains in order to offer disaster recovery. You can also define a stream that 'sources' from one or more other streams.</em></p>
+</blockquote>
+<p>JetStream cho phép admin server dễ dàng mirror stream, ví dụ giữa các JetStream domain khác nhau để hỗ trợ disaster recovery. Bạn cũng có thể định nghĩa stream "source" từ một hoặc nhiều stream khác.</p>
+<p><strong>Đồng bộ dữ liệu xuống đĩa</strong></p>
+<blockquote>
+<p>🇬🇧 <em>JetStream's file-based streams persist messages to disk. However, while JetStream does flush file writes to the OS synchronously, under the default configuration it does not immediately <code>fsync</code> data to disk. The server uses a configurable <code>sync_interval</code> option, with a default value of 2 minutes, which controls how often the server will <code>fsync</code> its data. The data will be <code>fsync</code>-ed no later than this interval. This has important consequences for durability with respect to OS failures (meaning ungraceful exit of the Operating System such as a power outage, and not just ungraceful exit or killing of the <code>nats-server</code> process itself):</em></p>
+</blockquote>
+<p>File-based stream của JetStream lưu message xuống đĩa. Tuy nhiên, dù JetStream flush file write xuống OS một cách đồng bộ, trong cấu hình mặc định nó không lập tức <code>fsync</code> dữ liệu xuống đĩa vật lý. Server dùng tùy chọn <code>sync_interval</code> có thể cấu hình được, mặc định là 2 phút, để kiểm soát tần suất <code>fsync</code> dữ liệu. Dữ liệu sẽ được <code>fsync</code>-ed chậm nhất sau khoảng thời gian này. Điều này có hậu quả quan trọng với độ bền dữ liệu khi OS gặp sự cố (ví dụ mất điện — không chỉ là process <code>nats-server</code> bị tắt không sạch):</p>
+<blockquote>
+<p>🇬🇧 <em>In a non-replicated setup, an OS failure may result in data loss. A client might publish a message and receive an acknowledgment, but the data may not yet be safely stored to disk. As a result, after an OS failure recovery, a server may have lost recently acknowledged messages.</em></p>
+</blockquote>
+<p>Trong cấu hình không có replication, OS failure có thể gây mất dữ liệu. Client có thể đã publish message và nhận acknowledgment, nhưng dữ liệu chưa được lưu an toàn xuống đĩa. Do đó, sau khi OS khôi phục, server có thể mất các message đã được acknowledge gần đây.</p>
+<blockquote>
+<p>🇬🇧 <em>In a replicated setup, a published message is acknowledged after it successfully replicated to at least a quorum of servers. However, replication alone is not enough to guarantee the strongest level of durability against multiple systemic failures.</em></p>
+</blockquote>
+<p>Trong cấu hình có replication, message được acknowledge sau khi replicate thành công đến ít nhất một quorum server. Tuy nhiên, replication đơn thuần chưa đủ để đảm bảo mức độ bền vững cao nhất khi xảy ra nhiều lỗi hệ thống cùng lúc.</p>
+<ul>
+<li>Nếu nhiều server lỗi đồng thời do OS failure, trước khi dữ liệu được <code>fsync</code>-ed, cluster có thể không khôi phục lại được các message đã acknowledge gần nhất.</li>
+<li>Nếu server bị lỗi mất dữ liệu cục bộ do OS failure, dù cực kỳ hiếm, có một số tổ hợp sự kiện khiến nó có thể rejoin cluster và tạo thành majority mới với các node chưa từng nhận hoặc lưu trữ một message nhất định. Cluster khi đó có thể tiếp tục với dữ liệu không đầy đủ, gây mất message đã được acknowledge.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>Setting a lower <code>sync_interval</code> increases the frequency of disk writes, and reduces the window for potential data loss, but at the expense of performance. Additionally, setting <code>sync_interval: always</code> will make sure servers <code>fsync</code> after every message before it is acknowledged. This setting, combined with replication in different data centers or availability zones, provides the strongest durability guarantees but at the slowest performance.</em></p>
+</blockquote>
+<p>Đặt <code>sync_interval</code> thấp hơn giúp tăng tần suất ghi đĩa, thu hẹp cửa sổ mất dữ liệu tiềm ẩn, nhưng ảnh hưởng đến hiệu năng. Ngoài ra, đặt <code>sync_interval: always</code> sẽ đảm bảo server <code>fsync</code> sau mỗi message trước khi acknowledge. Kết hợp với replication ở các data center hoặc availability zone khác nhau, cấu hình này cho độ bền tốt nhất nhưng hiệu năng thấp nhất.</p>
+<blockquote>
+<p>🇬🇧 <em>The default settings have been chosen to balance performance and risk of data loss in what we consider to be a typical production deployment scenario across multiple availability zones.</em></p>
+</blockquote>
+<p>Cài đặt mặc định được chọn để cân bằng hiệu năng và nguy cơ mất dữ liệu trong kịch bản triển khai production điển hình trên nhiều availability zone.</p>
+<blockquote>
+<p>🇬🇧 <em>For example, consider a stream with 3 replicas deployed across three separate availability zones. For the stream state to diverge across nodes would require that:</em></p>
+</blockquote>
+<p>Ví dụ, xét một stream với 3 replica (bản sao dữ liệu) triển khai trên ba availability zone riêng biệt. Để trạng thái stream bị phân kỳ giữa các node, cần xảy ra đồng thời:</p>
+<ul>
+<li>Một trong 3 server đã offline, bị cô lập hoặc bị phân vùng.</li>
+<li>OS của server thứ hai bị lỗi, làm mất dữ liệu của các message chỉ có trên 2/3 node vì chưa được <code>fsync</code>-ed.</li>
+<li>stream leader thuộc nhóm 2/3 node trên bị down hoặc bị cô lập/phân vùng.</li>
+<li>Server đầu tiên trong partition ban đầu chưa nhận được dữ liệu khôi phục từ partition.</li>
+<li>Server bị OS-fail quay lại và tiếp xúc với server đầu tiên nhưng không với stream leader cũ.</li>
+</ul>
+<blockquote>
+<p>🇬🇧 <em>In the end, 2 out of 3 nodes will be available, the previous stream leader with the writes will be unavailable, one server will have lost some writes due to the OS failure, and one server will have never seen these writes due to the earlier partition. The last two servers could then form a majority and accept new writes, essentially losing some of the former writes.</em></p>
+</blockquote>
+<p>Kết quả là 2/3 node khả dụng, stream leader cũ có dữ liệu đầy đủ lại không khả dụng, một server mất một số dữ liệu do OS failure, một server chưa bao giờ nhận được dữ liệu đó do partition trước đó. Hai server còn lại có thể tạo thành majority và chấp nhận write mới, về bản chất mất đi một phần dữ liệu đã ghi trước đó.</p>
+<blockquote>
+<p>🇬🇧 <em>Importantly this is a failure condition where stream state could diverge, but in a system that is deployed across multiple availability zones, it would require multiple faults to align precisely in the right way.</em></p>
+</blockquote>
+<p>Đây là điều kiện lỗi có thể khiến trạng thái stream phân kỳ, nhưng trong hệ thống triển khai trên nhiều availability zone, cần nhiều lỗi căn chỉnh chính xác mới có thể xảy ra.</p>
+<blockquote>
+<p>🇬🇧 <em>A potential mitigation to a failure of this kind is not automatically bringing back a server process that was OS-failed until it is known that a majority of the remaining servers have received the new writes, or by peer-removing the crashed server and admitting it as a new and wiped peer and allowing it to recover over the network from existing healthy nodes (although this could be expensive depending on the amount of data involved).</em></p>
+</blockquote>
+<p>Cách giảm thiểu rủi ro này là không tự động khởi động lại server bị OS-fail cho đến khi biết chắc majority các server còn lại đã nhận được dữ liệu mới, hoặc loại bỏ server bị crash ra khỏi peer và cho nó gia nhập lại như một peer mới (đã xóa sạch), để nó khôi phục qua mạng từ các node lành mạnh hiện có (dù cách này có thể tốn kém tùy lượng dữ liệu).</p>
+<blockquote>
+<p>🇬🇧 <em>For use cases where minimizing loss is an absolute priority, <code>sync_interval: always</code> can of course still be configured, but note that this will have a server-wide performance impact that may affect throughput or latencies. For production environments, operators should evaluate whether the default is correct for their use case, target environment, costs, and performance requirements.</em></p>
+</blockquote>
+<p>Với các use case mà giảm thiểu mất mát dữ liệu là ưu tiên tuyệt đối, <code>sync_interval: always</code> vẫn có thể cấu hình được, nhưng lưu ý rằng điều này sẽ ảnh hưởng đến hiệu năng toàn server, có thể tác động đến throughput hoặc latency. Trong môi trường production, operator nên đánh giá liệu cài đặt mặc định có phù hợp với use case, môi trường đích, chi phí và yêu cầu hiệu năng của mình không.</p>
+<blockquote>
+<p>🇬🇧 <em>Alternatively, a hybrid approach can be used where existing clusters still function under their default <code>sync_interval</code> settings but a new cluster gets added that's configured with <code>sync_interval: always</code>, and utilizes server tags. The placement of a stream can then be specified to have this stream store data on this higher durability cluster through the use of <a href="streams/#placement">placement tags</a>.</em></p>
+</blockquote>
+<p>Ngoài ra, có thể dùng cách tiếp cận lai: các cluster hiện tại vẫn hoạt động với cài đặt <code>sync_interval</code> mặc định, trong khi thêm một cluster mới được cấu hình với <code>sync_interval: always</code> và dùng server tag. Khi đó, placement của stream có thể được chỉ định để lưu dữ liệu trên cluster có độ bền cao hơn này thông qua <a href="streams/#placement">placement tags</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Configure a cluster that&#39;s dedicated to always sync writes.
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>server_tags: [&quot;sync:always&quot;]
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>jetstream {
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    sync_interval: always
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>}
+</code></pre></div>
+<blockquote>
+<p>🇬🇧 <em>Create a replicated stream that's specifically placed in the cluster using <code>sync_interval: always</code>, to ensure the strongest durability only for stream writes that require this level of durability.</em></p>
+</blockquote>
+<p>Tạo một replicated stream được đặt cụ thể trong cluster bằng <code>sync_interval: always</code>, để đảm bảo độ bền cao nhất chỉ cho các stream write yêu cầu mức độ bền vững này.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nats stream add --replicas 3 --tag sync:always
+</code></pre></div>
+<h4 id="flow-control-tach-roi">Flow control tách rời<a class="headerlink" href="#flow-control-tach-roi" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>JetStream provides decoupled flow control over streams, the flow control is not 'end to end' where the publisher(s) are limited to publish no faster than the slowest of all the consumers (i.e. the lowest common denominator) can receive but is instead happening individually between each client application (publishers or consumers) and the nats server.</em></p>
+</blockquote>
+<p>JetStream cung cấp flow control tách rời trên các stream — không phải flow control "đầu-đến-cuối" giới hạn publisher không gửi nhanh hơn consumer chậm nhất, mà thay vào đó diễn ra riêng lẻ giữa mỗi ứng dụng client (publisher hoặc consumer) với NATS server.</p>
+<blockquote>
+<p>🇬🇧 <em>When using the JetStream publish calls to publish to streams there is an acknowledgment mechanism between the publisher and the NATS server, and you have the choice of making synchronous or asynchronous (i.e. 'batched') JetStream publish calls.</em></p>
+</blockquote>
+<p>Khi dùng JetStream publish call để gửi lên stream, có cơ chế acknowledgment giữa publisher và NATS server. Bạn có thể chọn thực hiện JetStream publish call theo kiểu sync hoặc async (tức "batched").</p>
+<blockquote>
+<p>🇬🇧 <em>On the subscriber side, the sending of messages from the NATS server to the client applications receiving or consuming messages from streams is also flow controlled.</em></p>
+</blockquote>
+<p>Về phía subscriber, việc gửi message từ NATS server đến các ứng dụng client nhận hoặc consume message từ stream cũng được flow control.</p>
+<h4 id="exactly-once-semantics">Exactly once semantics<a class="headerlink" href="#exactly-once-semantics" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>Because publications to streams using the JetStream publish calls are acknowledged by the server the base quality of service offered by streams is '<em>at least once</em>', meaning that while reliable and normally duplicate free there are some specific failure scenarios that could result in a publishing application believing (wrongly) that a message was not published successfully and therefore publishing it again, and there are failure scenarios that could result in a client application's consumption acknowledgment getting lost and therefore in the message being re-sent to the consumer by the server. Those failure scenarios while being rare and even difficult to reproduce do exist and can result in perceived 'message duplication' at the application level.</em></p>
+</blockquote>
+<p>Vì các publication lên stream sử dụng JetStream publish call được server acknowledge, chất lượng dịch vụ cơ bản của stream là '<em>at least once</em>' — nghĩa là dù đáng tin cậy và thường không có bản sao, vẫn tồn tại các kịch bản lỗi hiếm gặp khiến ứng dụng publish tin rằng (nhầm) message chưa gửi được và gửi lại, hoặc acknowledgment của ứng dụng consume bị mất khiến server re-deliver message đến consumer. Các kịch bản này dù hiếm nhưng có tồn tại và có thể dẫn đến "message trùng lặp" ở tầng ứng dụng.</p>
+<blockquote>
+<p>🇬🇧 <em>Therefore, JetStream also offers an '<em>exactly once</em>' quality of service. For the publishing side, it relies on the publishing application attaching a unique message or publication ID in a message header and on the server keeping track of those IDs for a configurable rolling period of time in order to detect the publisher publishing the same message twice. For the subscribers a <em>double</em> acknowledgment mechanism is used to avoid a message being erroneously re-sent to a subscriber by the server after some kinds of failures.</em></p>
+</blockquote>
+<p>Vì vậy, JetStream cũng cung cấp chất lượng dịch vụ '<em>exactly once</em>'. Về phía publisher, cơ chế này dựa vào ứng dụng gắn một ID message/publication duy nhất vào header và server theo dõi các ID đó trong một khoảng thời gian rolling có thể cấu hình để phát hiện publisher gửi trùng. Về phía subscriber, cơ chế <em>double</em> acknowledgment được dùng để tránh server re-deliver nhầm message đến subscriber sau một số loại lỗi.</p>
+<h4 id="consumer">Consumer<a class="headerlink" href="#consumer" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>JetStream <a href="consumers/">consumers</a> are 'views' on a stream, they are subscribed to (or pulled) by client applications to receive copies of (or to consume if the stream is set as a working queue) messages stored in the stream.</em></p>
+</blockquote>
+<p>JetStream <a href="consumers/">consumer</a> là "góc nhìn" trên một stream — được client application subscribe (hoặc pull) để nhận bản sao (hoặc consume nếu stream được cấu hình là working queue) các message lưu trong stream.</p>
+<p><strong>Fast push consumer</strong></p>
+<blockquote>
+<p>🇬🇧 <em>Client applications can choose to use fast un-acknowledged <code>push</code> (ordered) consumers to receive messages as fast as possible (for the selected replay policy) on a specified delivery subject or to an inbox. Those consumers are meant to be used to 'replay' rather than 'consume' the messages in a stream.</em></p>
+</blockquote>
+<p>Ứng dụng client có thể dùng <code>push</code> (ordered) consumer không cần acknowledge để nhận message nhanh nhất có thể (theo replay policy đã chọn) trên một delivery subject hoặc inbox. Các consumer này dùng để "phát lại" chứ không phải "consume" message trong stream.</p>
+<p><strong>Pull consumer có thể mở rộng ngang với batching</strong></p>
+<blockquote>
+<p>🇬🇧 <em>Client applications can also use and share <code>pull</code> consumers that are demand-driven, support batching and must explicitly acknowledge message reception and processing which means that they can be used to consume (i.e. use the stream as a distributed queue) as well as process the messages in a stream.</em></p>
+</blockquote>
+<p>Ứng dụng client cũng có thể dùng và chia sẻ <code>pull</code> consumer theo kiểu demand-driven, hỗ trợ batching và phải acknowledge tường minh khi nhận và xử lý message — nghĩa là chúng có thể dùng để consume (tức dùng stream như distributed queue) cũng như xử lý message trong stream.</p>
+<blockquote>
+<p>🇬🇧 <em>Pull consumers can and are meant to be shared between applications (just like queue groups) in order to provide easy and transparent horizontal scalability of the processing or consumption of messages in a stream without having (for example) to worry about having to define partitions or worry about fault-tolerance.</em></p>
+</blockquote>
+<p>Pull consumer có thể và được thiết kế để chia sẻ giữa các ứng dụng (giống như queue group) nhằm cung cấp khả năng mở rộng ngang dễ dàng và minh bạch cho việc xử lý hoặc consume message trong stream, mà không cần lo lắng về việc định nghĩa partition hay fault-tolerance.</p>
+<blockquote>
+<p>🇬🇧 <em>Note: using pull consumers doesn't mean that you can't get updates (new messages published into the stream) 'pushed' in real-time to your application, as you can pass a (reasonable) timeout to the consumer's Fetch call and call it in a loop.</em></p>
+</blockquote>
+<p>Lưu ý: dùng pull consumer không có nghĩa là bạn không thể nhận cập nhật (message mới publish vào stream) theo thời gian thực, vì bạn có thể truyền một timeout hợp lý vào lệnh Fetch của consumer và gọi nó trong vòng lặp.</p>
+<p><strong>Consumer acknowledgment</strong></p>
+<blockquote>
+<p>🇬🇧 <em>While you can decide to use un-acknowledged consumers trading quality of service for the fastest possible delivery of messages, most processing is not idem-potent and requires higher qualities of service (such as the ability to automatically recover from various failure scenarios that could result in some messages not being processed or being processed more than once) and you will want to use acknowledged consumers. JetStream supports more than one kind of acknowledgment:</em></p>
+</blockquote>
+<p>Dù bạn có thể dùng consumer không cần acknowledge để đổi lấy tốc độ giao nhận tối đa, hầu hết xử lý không phải idempotent và cần chất lượng dịch vụ cao hơn (chẳng hạn tự động khôi phục từ các kịch bản lỗi khiến message không được xử lý hoặc bị xử lý nhiều lần). JetStream hỗ trợ nhiều loại acknowledgment:</p>
+<ul>
+<li>Một số consumer hỗ trợ acknowledge <em>tất cả</em> message đến sequence number của message hiện tại; một số consumer cung cấp chất lượng dịch vụ cao nhất nhưng yêu cầu acknowledge từng message một cách tường minh, kèm theo thời gian tối đa server chờ acknowledgment trước khi re-deliver (đến process khác đang gắn vào consumer).</li>
+<li>Bạn cũng có thể gửi <em>negative</em> acknowledgment.</li>
+<li>Thậm chí có thể gửi acknowledgment <em>in progress</em> (báo hiệu đang xử lý và cần thêm thời gian trước khi ack hoặc nack).</li>
+</ul>
+<h3 id="key-value-store">Key Value Store<a class="headerlink" href="#key-value-store" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>🇬🇧 <em>The JetStream persistence layer enables the Key Value store: the ability to store, retrieve and delete <code>value</code> messages associated with a <code>key</code> into a <code>bucket</code>.</em></p>
+</blockquote>
+<p>Lớp lưu trữ JetStream cho phép Key Value store: khả năng lưu, truy xuất và xóa <code>value</code> message gắn với một <code>key</code> vào một <code>bucket</code>.</p>
+<ul>
+<li><a href="./key-value-store">Concepts</a></li>
+<li><a href="https://docs.nats.io/nats-concepts/jetstream/key-value-store/kv_walkthrough">Walkthrough</a></li>
+<li><a href="../../using-nats/developing-with-nats/js/kv/">API and details</a></li>
+</ul>
+<h4 id="watch-va-history">Watch và History<a class="headerlink" href="#watch-va-history" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>You can subscribe to changes in a Key Value on the bucket or individual key level with <code>watch</code> and optionally retrieve a <code>history</code> of the values (and deletions) that have happened on a particular key.</em></p>
+</blockquote>
+<p>Bạn có thể subscribe vào các thay đổi của Key Value ở cấp bucket hoặc từng key riêng lẻ bằng <code>watch</code>, và tùy chọn lấy <code>history</code> các giá trị (và lần xóa) đã xảy ra trên một key cụ thể.</p>
+<h4 id="cap-nhat-atomic-va-locking">Cập nhật atomic và locking<a class="headerlink" href="#cap-nhat-atomic-va-locking" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>🇬🇧 <em>The Key Value store supports atomic <code>create</code> and <code>update</code> operations. This enables pessimistic locks (by creating a key and holding on to it) and optimistic locks (using CAS - compare and set).</em></p>
+</blockquote>
+<p>Key Value store hỗ trợ các thao tác <code>create</code> và <code>update</code> atomic. Điều này cho phép pessimistic lock (bằng cách tạo key và giữ nó) và optimistic lock (dùng CAS — compare and set).</p>
+<h3 id="object-store">Object Store<a class="headerlink" href="#object-store" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>🇬🇧 <em>The Object Store is similar to the Key Value Store. The key being replaced by a file name and value being designed to store arbitrarily large <code>objects</code> (e.g. files, even if they are very large) rather than 'values' that are message-sized (i.e. limited to 1Mb by default). This is achieved by chunking messages.</em></p>
+</blockquote>
+<p>Object Store tương tự Key Value Store, nhưng key được thay bằng tên file và value được thiết kế để lưu <code>objects</code> tùy ý lớn (ví dụ file dung lượng lớn) thay vì "value" có kích thước message (mặc định giới hạn 1MB). Điều này đạt được bằng cách chunking message.</p>
+<ul>
+<li><a href="https://docs.nats.io/nats-concepts/jetstream/object-store/obj_store">Concepts</a></li>
+<li><a href="https://docs.nats.io/nats-concepts/jetstream/object-store/obj_walkthrough">Walkthrough</a></li>
+<li><a href="../../using-nats/developing-with-nats/js/object/">API and details</a></li>
+</ul>
+<h2 id="legacy">Legacy<a class="headerlink" href="#legacy" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>🇬🇧 <em>Note that JetStream completely replaces the <a href="https://docs.nats.io/legacy/stan">STAN</a> legacy NATS streaming layer.</em></p>
+</blockquote>
+<p>Lưu ý: JetStream thay thế hoàn toàn lớp streaming legacy <a href="https://docs.nats.io/legacy/stan">STAN</a> của NATS.</p>
+<h2 id="thuat-ngu-trong-bai">Thuật ngữ trong bài<a class="headerlink" href="#thuat-ngu-trong-bai" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>async</strong>: bất đồng bộ</li>
+<li><strong>cache</strong>: bộ nhớ đệm</li>
+<li><strong>cluster</strong>: cụm nhiều server chạy chung</li>
+<li><strong>consumer</strong>: bên xử lý dữ liệu từ stream</li>
+<li><strong>leader</strong>: server chính trong nhóm replica</li>
+<li><strong>message</strong>: gói dữ liệu được gửi đi</li>
+<li><strong>node</strong>: một server trong cluster</li>
+<li><strong>publisher</strong>: bên gửi message</li>
+<li><strong>queue</strong>: hàng đợi message</li>
+<li><strong>queue group</strong>: nhóm subscribers chia sẻ tải</li>
+<li><strong>replica</strong>: bản sao dữ liệu</li>
+<li><strong>stream</strong>: luồng message lưu trữ liên tục</li>
+<li><strong>subject</strong>: chuỗi định danh message (giống topic)</li>
+<li><strong>subscriber</strong>: bên đăng ký nhận message</li>
+<li><strong>sync</strong>: đồng bộ</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
